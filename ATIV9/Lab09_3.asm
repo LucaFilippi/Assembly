@@ -1,22 +1,21 @@
-TITLE INVERTE VETOR
 .MODEL SMALL
 .STACK 100h
 .DATA
-    vetor DB 0, 1, 2, 3, 4, 5, 6  ; Vetor de 7 posições
-
+    VETOR DB '*', '*', '*', '*', '*', '*', '*'  ; Vetor de 7 elementos inicialmente preenchido com '*'
+    MENSAGEM DB 10,13, 'Digite um numero:   $',10,13          ; Mensagem para solicitar número do usuário
 .CODE
 MAIN PROC
     ; Inicializa o segmento de dados
     MOV AX, @DATA
     MOV DS, AX
 
-    ; Chama procedimento para ler o vetor
+    ; Chama subrotina para ler o vetor (usuário preenche o vetor)
     CALL LerVetor
 
-    ; Chama procedimento para inverter o vetor
+    ; Chama subrotina para inverter o vetor
     CALL InverterVetor
 
-    ; Chama procedimento para imprimir o vetor invertido
+    ; Chama subrotina para imprimir o vetor invertido
     CALL ImprimirVetor
 
     ; Encerramento do programa
@@ -24,45 +23,54 @@ MAIN PROC
     INT 21h
 MAIN ENDP
 
-; Procedimento para ler o vetor
+; Subrotina para ler o vetor (preenchido pelo usuário)
 LerVetor PROC
     XOR BX, BX           ; Inicia BX como índice
     MOV CX, 7            ; Tamanho do vetor
 LerLoop:
-    MOV AL, vetor[BX]    ; Lê o elemento do vetor
-    ; Aqui você pode adicionar qualquer operação de leitura se necessário
-    INC BX               ; Próximo índice
-    LOOP LerLoop
+    ; Exibe a mensagem para o usuário
+    LEA DX, MENSAGEM     ; Carrega o endereço da mensagem
+    MOV AH, 09h          ; Função para exibir string
+    INT 21h              ; Interrupção para saída
+
+    ; Lê o número do usuário
+    MOV AH, 01h          ; Função para ler caractere
+    INT 21h              ; Interrupção para entrada
+    SUB AL, 30h          ; Converte caractere ASCII para número
+    MOV VETOR[BX], AL    ; Armazena o número no vetor
+
+    INC BX               ; Incrementa o índice do vetor
+    LOOP LerLoop         ; Decrementa CX e repete até que CX seja zero
     RET
 LerVetor ENDP
 
-; Procedimento para inverter o vetor
+; Subrotina para inverter o vetor
 InverterVetor PROC
     XOR SI, SI           ; SI aponta para o primeiro elemento
     MOV DI, 6            ; DI aponta para o último elemento (índice 6)
     MOV CX, 3            ; Apenas metade do vetor precisa ser processada
 InverterLoop:
-    MOV AL, vetor[SI]    ; Guarda o elemento do início
-    MOV BL, vetor[DI]    ; Guarda o elemento do fim
-    MOV vetor[SI], BL    ; Coloca o último no lugar do primeiro
-    MOV vetor[DI], AL    ; Coloca o primeiro no lugar do último
-    INC SI               ; Avança para o próximo
-    DEC DI               ; Regride para o anterior
-    LOOP InverterLoop
+    MOV AL, VETOR[SI]    ; Guarda o elemento do início em AL
+    MOV BL, VETOR[DI]    ; Guarda o elemento do fim em BL
+    MOV VETOR[SI], BL    ; Coloca o último no lugar do primeiro
+    MOV VETOR[DI], AL    ; Coloca o primeiro no lugar do último
+    INC SI               ; Avança para o próximo elemento no início
+    DEC DI               ; Retrocede para o anterior no final
+    LOOP InverterLoop    ; Decrementa CX e repete até que CX seja zero
     RET
 InverterVetor ENDP
 
-; Procedimento para imprimir o vetor
+; Subrotina para imprimir o vetor
 ImprimirVetor PROC
     XOR BX, BX           ; Reinicia BX como índice
     MOV CX, 7            ; Tamanho do vetor
 ImprimirLoop:
-    MOV DL, vetor[BX]    ; Lê o elemento do vetor
+    MOV DL, VETOR[BX]    ; Lê o elemento do vetor e armazena em DL
     ADD DL, 30h          ; Converte para caractere ASCII
     MOV AH, 02h          ; Função para imprimir caractere
-    INT 21h              ; Interrupção para saída
-    INC BX               ; Próximo índice
-    LOOP ImprimirLoop
+    INT 21h              ; Chama interrupção para saída
+    INC BX               ; Incrementa o índice do vetor
+    LOOP ImprimirLoop    ; Decrementa CX e repete até que CX seja zero
     RET
 ImprimirVetor ENDP
 
