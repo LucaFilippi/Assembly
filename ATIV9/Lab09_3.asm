@@ -2,7 +2,7 @@
 .STACK 100h
 .DATA
     VETOR DB '*', '*', '*', '*', '*', '*', '*'  ; Vetor de 7 elementos inicialmente preenchido com '*'
-    MENSAGEM DB 10,13, 'Digite um numero:   $',10,13          ; Mensagem para solicitar número do usuário
+    MENSAGEM DB 10,13, 'Digite um numero:   $'      ; Mensagem para solicitar número do usuário
 .CODE
 MAIN PROC
     ; Inicializa o segmento de dados
