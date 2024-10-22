@@ -12,7 +12,7 @@ MOV DS,AX
 MOV AH,9 ; chama a função que imprime na tela
 MOV DX,OFFSET hello ; coloca a string em DX  
 ; seria a mesma coisa que usar :
-;LEA DX hello  
+;LEA DX, hello  
 ;teste pode ser feito retirando o ";" como comentario.
 INT 21h ;executa a função imprimindo helloworld na tela
 
