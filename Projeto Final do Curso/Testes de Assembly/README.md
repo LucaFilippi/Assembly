@@ -1,0 +1,1 @@
+Esse arquivo serve para treinos com o objetivo de concluir o projeto final. Nenhum dos arquivos aqui tem finalidade avaliativa, tudo aqui foi feito partindo de mim mesmo para mim mesmo para treinar minhas habilidades no assembly x86.
