@@ -1,3 +1,5 @@
+; Faça um programa que conte quantas letras “A” tem em um 
+;nome guardado num vetor de tamanho 20
 TITLE EXERCICIO 1
 .MODEL SMALL
 .STACK 100h        ; Determina o tamanho da pilha
