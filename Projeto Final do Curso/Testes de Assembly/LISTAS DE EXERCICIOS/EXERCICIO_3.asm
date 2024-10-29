@@ -20,33 +20,26 @@ MAIN PROC
     ; Move 10 para BL para fazer as multiplicações
     MOV BL, 10
 
-    CALL LERDECIMAL
-    MOV AH,2
-    MOV DL,10
-    INT 21h 
-    MOV AH,2
-    MOV DL,13
-    INT 21h 
-
-    CALL IMPRIMIRHEX
-    MOV AH,2
-    MOV DL,10
-    INT 21h 
-    MOV AH,2
-    MOV DL,13
-    INT 21h 
-    CALL IMPRIMEBINARIO
-    MOV AH,2
-    MOV DL,10
-    INT 21h 
-    MOV AH,2
-    MOV DL,13
-    INT 21h 
+    CALL LERDECIMAL ;chama a subrotina que le os caracteres do teclado
+    CALL IMPRIMIRHEX ; chama a subrotina que imprime o hexadecimal
+    CALL PULALINHA
+    CALL IMPRIMEBINARIO ;chama a subrotina que imprime em binario
+    CALL PULALINHA
 
     ;Finaliza o programa
     MOV AH,4CH
     INT 21H
     MAIN ENDP
+
+    PULALINHA PROC 
+    MOV AH,2
+    MOV DL,10
+    INT 21h 
+    MOV AH,2
+    MOV DL,13
+    INT 21h 
+    RET
+    PULALINHA ENDP
 
 
 LERDECIMAL PROC
