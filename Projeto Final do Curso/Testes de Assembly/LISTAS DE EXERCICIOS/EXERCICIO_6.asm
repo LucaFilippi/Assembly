@@ -4,7 +4,7 @@ TITLE Exercicio 6
 .MODEL SMALL
 .STACK 100h
 .DATA
-VETOR DB 0, 1, 2, 0, 0, 1, 0, 1, 1
+VETOR DB 0, 1, 2, 0, 0, 1, 0, 1
 .CODE
 MAIN PROC
     ; Inicializa segmento de dados
