@@ -17,8 +17,6 @@ MAIN PROC
     ; Inicializa segmento de dados
     MOV AX, @DATA
     MOV DS, AX
-    ; Move 10 para BL para fazer as multiplicações
-    MOV BL, 10
 
     CALL LERDECIMAL ;chama a subrotina que le os caracteres do teclado
     CALL IMPRIMIRHEX ; chama a subrotina que imprime o hexadecimal
