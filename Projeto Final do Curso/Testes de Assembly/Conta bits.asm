@@ -18,7 +18,7 @@ MAIN PROC
     XOR AX, AX
     XOR CX, CX
     XOR DX, DX
-    XOR BX, BX
+    XOR BX, BX 
 
     ; Exibe mensagem
     MOV DX, OFFSET MSG
