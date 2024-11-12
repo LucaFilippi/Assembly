@@ -51,9 +51,9 @@ LOOP_JOGO:
     ; Imprimir matriz de tiros
     CALL IMPRIMIR_TIROS
 
-    ; Exibir mensagem para entrada de linha
+    ; Exibir mensagem para entrada de coluna
     MOV AH, 09h
-    LEA DX, MSG_LINHA
+    LEA DX, MSG_COLUNA
     INT 21h
 
     ; Ler entrada da linha
@@ -67,9 +67,9 @@ LOOP_JOGO:
     XOR AH, AH
     MOV BX, AX              ; Armazena linha em BX
 
-    ; Exibir mensagem para entrada de coluna
+    ; Exibir mensagem para entrada de linha
     MOV AH, 09h
-    LEA DX, MSG_COLUNA
+    LEA DX, MSG_LINHA
     INT 21h
 
     ; Ler entrada da coluna
@@ -122,20 +122,21 @@ DESISTIR:
 MAIN ENDP
 IMPRIMIR_TIROS PROC
     MOV CX, 10              ; Configura para 10 linhas
-    MOV SI, 0               ; Início da matriz de tiros
+    MOV SI, 0               ; Início da matriz de tiros (representa a linha)
 
 IMPRIMIR_LINHA:
-    MOV BX, 10              ; Configura para imprimir 10 elementos por linha
+    MOV BX, 0               ; Coluna inicial de cada linha (usaremos BX para as colunas)
+    MOV DX, SI              ; Guarda o valor inicial da linha para resetá-lo ao final da linha
 
 IMPRIMIR_ELEMENTO:
-    MOV AL, TIROS[SI]       ; Carrega o valor da posição atual
+    MOV AL, TIROS[SI + BX]  ; Carrega o valor da posição atual usando SI para a linha e BX para a coluna
     MOV DL, AL
     MOV AH, 02h
     INT 21h                 ; Imprime o caractere
 
-    INC SI                  ; Próxima posição na matriz
-    DEC BX                  ; Decrementa o contador de elementos na linha
-    JNZ IMPRIMIR_ELEMENTO   ; Continua na linha atual se não terminou
+    INC BX                  ; Próxima coluna na linha
+    CMP BX, 10              ; Verifica se alcançou o final da linha
+    JL IMPRIMIR_ELEMENTO    ; Continua na linha atual se não terminou
 
     ; Pular para a próxima linha na tela
     MOV AH, 02h
@@ -144,7 +145,11 @@ IMPRIMIR_ELEMENTO:
     MOV DL, 13              ; Carriage return
     INT 21h
 
+    ADD SI, 10              ; Próxima linha (incrementa SI para a próxima linha da matriz)
     LOOP IMPRIMIR_LINHA     ; Continua até imprimir toda a matriz
     RET
 IMPRIMIR_TIROS ENDP
+
+
+
 END MAIN
