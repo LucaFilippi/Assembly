@@ -63,7 +63,7 @@ CONT_ACERTOS DB 0
 MSG_LINHA DB 10,13,'Qual linha deseja acertar? (0-9): $'
 MSG_COLUNA DB 10,13,'Qual coluna deseja acertar? (0-9): $'  
 MSG_FIM DB 10,13,'Voce venceu! Parabens!! $'
-MSG_DESISTIU DB 10,13,'Voce desistiu, o jogo acabou.'
+MSG_DESISTIU DB 10,13,'Voce desistiu, o jogo acabou.$'
 RESULTADO DB ?
 .CODE
 MAIN PROC
