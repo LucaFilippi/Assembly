@@ -1,0 +1,67 @@
+;Dada uma matriz 2x2 na memória, calcule e exiba a sua matriz 
+;transposta.
+TITLE EXERCICIO 3
+.MODEL SMALL
+.STACK 0100h
+.DATA 
+MATRIZ DB 1, 2
+       DB 8, 9
+
+MSG1 DB "MATRIZ INICIAL: $"
+MSG2 DB "MATRIZ TRANSPOSTA: $"
+.CODE 
+MAIN PROC
+;Inicializa as variaveis 
+MOV AX, @DATA
+MOV DS, AX
+
+CALL PRIMEIRAMATRIZ
+
+MOV AH , 4Ch 
+INT 21h
+MAIN ENDP
+PRIMEIRAMATRIZ PROC
+    PUSH AX
+    PUSH BX
+    PUSH CX
+    PUSH DX
+    PUSH SI
+
+    MOV AH, 9
+    MOV DX, OFFSET MSG1 
+    INT 21h
+
+
+    XOR DX,DX
+    XOR BX, BX
+    XOR SI, SI
+    IMPRIMEMATRIZ1:
+    MOV DL, MATRIZ[SI+BX]
+    ADD DL, 30h
+    INC BX
+    MOV AH, 2
+    INT 21h
+    CMP BX, 2
+    JE TROCALINHA
+    CMP SI, 2
+    JA SAI
+
+    JMP IMPRIMEMATRIZ1
+
+
+    TROCALINHA: 
+    ADD SI, 2
+    XOR BX, BX
+    JMP IMPRIMEMATRIZ1
+
+    SAI: 
+    POP SI 
+    POP DX 
+    POP CX
+    POP BX
+    POP AX
+
+    RET
+PRIMEIRAMATRIZ ENDP
+
+END MAIN
